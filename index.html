@@ -61,12 +61,12 @@
 <meta name="mobile-web-app-capable" content="yes" />
 
 <!-- ===== Preconnects for performance ===== -->
-<link rel="preconnect" href="https://ornl.opendatasoft.com" crossorigin />
+<link rel="preconnect" href="https://openenergyhub.ornl.gov" crossorigin />
 <link rel="preconnect" href="https://api.weather.gov" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="dns-prefetch" href="https://ornl.opendatasoft.com" />
+<link rel="dns-prefetch" href="https://openenergyhub.ornl.gov" />
 <link rel="dns-prefetch" href="https://api.weather.gov" />
 
 <!-- ===== Fonts ===== -->
@@ -630,23 +630,63 @@ main {
   color: var(--text-soft);
 }
 .map-tooltip .tt-row b { color: var(--accent); font-weight: 700; }
+.map-tooltip .tt-row.tt-nodata {
+  justify-content: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 4px 0 2px;
+}
+.map-tooltip .tt-hint {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  border-top: 1px dashed var(--border);
+  padding-top: 4px;
+  line-height: 1.4;
+}
+.state.state-nodata { cursor: help; }
 
 /* Legend */
-.legend {
+/* Bin-based legend (matches PowerOutage.com pattern) */
+.legend-bins {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   flex-wrap: wrap;
-  padding: 10px 4px 0;
+  padding: 12px 4px 0;
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
+  font-size: 10.5px;
+  color: var(--text-soft);
 }
-.legend-bar {
-  flex: 1; min-width: 140px;
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, #1a2238 0%, #ffb800 50%, #ff3d57 100%);
+.legend-bins .legend-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 6px;
+  font-size: 10px;
+}
+.legend-bins .bin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: #fff;
+  font-weight: 600;
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+.legend-bins .bin-1 { background: #1a2238; color: var(--text-soft); }
+.legend-bins .bin-2 { background: #2b5fae; }
+.legend-bins .bin-3 { background: #ffb800; color: #0a0e1a; }
+.legend-bins .bin-4 { background: #ff7a3d; color: #0a0e1a; }
+.legend-bins .bin-5 { background: #ff3d57; }
+.legend-bins .bin-nd { background: transparent; color: var(--text-muted); }
+.legend-bins .bin-nd .swatch.nd {
+  width: 14px; height: 14px; border-radius: 3px;
+  background-image: repeating-linear-gradient(45deg, #10172a 0 3px, #1f2a45 3px 6px);
   border: 1px solid var(--border);
 }
 
@@ -817,6 +857,234 @@ main {
 .county-row .cname { font-weight: 500; }
 .county-row .cval { font-family: var(--font-mono); color: var(--accent); font-weight: 600; }
 .county-row .cmeta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ============================================================
+   COVERAGE BANNER (honest about ODIN partial coverage)
+   ============================================================ */
+.coverage-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: linear-gradient(90deg, rgba(255,184,0,0.08), rgba(255,184,0,0.02));
+  border: 1px solid rgba(255,184,0,0.25);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+.coverage-banner .cb-icon {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  color: var(--accent);
+  margin-top: 1px;
+}
+.coverage-banner .cb-icon svg { width: 100%; height: 100%; }
+.coverage-banner strong { color: var(--text); font-weight: 600; }
+.coverage-banner em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+/* ============================================================
+   LEADERBOARD TABS (State / Utility toggle)
+   ============================================================ */
+.lb-tabs {
+  display: inline-flex;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 12px;
+  gap: 2px;
+}
+.lb-tabs button {
+  background: transparent;
+  border: 0;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.lb-tabs button:hover { color: var(--text); }
+.lb-tabs button.active {
+  background: var(--accent);
+  color: #0a0e1a;
+}
+
+/* utility-row variant: same bones as lb-row but no rank number */
+.lb-row.utility { padding-left: 14px; }
+.lb-row.utility .lb-rank {
+  background: rgba(255,184,0,0.12);
+  color: var(--accent);
+  width: auto;
+  padding: 0 8px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   BREAKDOWN SECTION (state cards + utility cards)
+   ============================================================ */
+.breakdown-section {
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+.breakdown-head {
+  margin-bottom: 16px;
+}
+.breakdown-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(22px, 3.2vw, 30px);
+  letter-spacing: 0.01em;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+.breakdown-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 640px;
+}
+
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 980px) {
+  .breakdown-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.breakdown-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+}
+.breakdown-col-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.breakdown-col-head h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.bk-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 9px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 720px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  padding-right: 4px;
+}
+.card-grid::-webkit-scrollbar { width: 6px; }
+.card-grid::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+.outage-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+.outage-card:hover {
+  border-color: var(--accent);
+  background: rgba(255,184,0,0.04);
+  transform: translateY(-1px);
+}
+.outage-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.outage-card:hover::before { opacity: 1; }
+.outage-card.critical::before { background: var(--critical); opacity: 0.7; }
+.outage-card.warn::before { background: var(--warn); opacity: 0.7; }
+
+.oc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.oc-customers {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
+  text-align: right;
+  white-space: nowrap;
+}
+.oc-stats {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+.oc-stats .oc-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.oc-stats .oc-stat svg {
+  width: 13px; height: 13px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+.oc-stats .oc-stat b {
+  color: var(--text-soft);
+  font-weight: 600;
+}
+.oc-stats .oc-stat.percent b { color: var(--critical); }
+
+/* Severity tint by customer count */
+.outage-card.tier-5 { border-left: 3px solid var(--critical); }
+.outage-card.tier-4 { border-left: 3px solid #ff7a3d; }
+.outage-card.tier-3 { border-left: 3px solid var(--accent); }
+.outage-card.tier-2 { border-left: 3px solid #2b5fae; }
+.outage-card.tier-1 { border-left: 3px solid #1a2238; }
 
 /* ============================================================
    WEATHER PANEL
@@ -1103,10 +1371,21 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
   <!-- Hero -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-row">
-      <h1 id="hero-title">Who's <span class="accent">without power</span><br>in the US right now</h1>
+      <h1 id="hero-title">US power <span class="accent">outage tracker</span><br>live ODIN feed</h1>
       <div class="last-updated" id="last-updated">Loading…</div>
     </div>
-    <p>Live customer-outage counts pulled from utilities through ODIN (the U.S. Department of Energy / Oak Ridge National Laboratory's outage data initiative), cross-referenced with active NOAA weather alerts. Tap any state to drill into the data.</p>
+    <p>Customer-outage counts reported through <strong>ODIN</strong>, the U.S. Department of Energy / Oak Ridge National Laboratory data feed, cross-referenced with active NOAA weather alerts. Tap any state or utility to drill in.</p>
+
+    <!-- Honest coverage banner -->
+    <div class="coverage-banner" role="note" aria-label="Data coverage notice">
+      <div class="cb-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="cb-body">
+        <strong>Partial national coverage.</strong>
+        ODIN is opt-in. Currently <strong>150+ utilities serving ~45M of ~165M US customers</strong> (about one-quarter of the country) report into this feed. Counties with no participating utility appear striped on the map — that means <em>no data</em>, not zero outages. Always check your own utility's outage map for authoritative status in your service area.
+      </div>
+    </div>
   </section>
 
   <!-- National Stats -->
@@ -1146,15 +1425,27 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
     </div>
 
     <div class="map-wrap">
-      <svg id="usMap" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive map of US power outages by state. Use Tab to focus a state and Enter to view detail."></svg>
+      <svg id="usMap" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive map of US power outages by state. States without participating utilities show as striped. Use Tab to focus a state and Enter to view detail.">
+        <defs>
+          <pattern id="noDataPattern" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="#10172a"/>
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#1f2a45" stroke-width="2"/>
+          </pattern>
+        </defs>
+      </svg>
       <div class="map-loading" id="map-loading"><div><div class="spinner"></div>Loading live data…</div></div>
       <div class="map-tooltip" id="map-tooltip" role="tooltip"></div>
     </div>
 
-    <div class="legend" aria-hidden="true">
-      <span>0</span>
-      <div class="legend-bar"></div>
-      <span id="legend-max">—</span>
+    <!-- Bin-based legend -->
+    <div class="legend-bins" aria-label="Map color scale" id="legend-bins">
+      <span class="legend-label">Customers Out</span>
+      <span class="bin bin-1">&lt; 10K</span>
+      <span class="bin bin-2">10K–50K</span>
+      <span class="bin bin-3">50K–100K</span>
+      <span class="bin bin-4">100K–500K</span>
+      <span class="bin bin-5">500K+</span>
+      <span class="bin bin-nd"><span class="swatch nd"></span>No data</span>
     </div>
   </section>
 
@@ -1162,8 +1453,12 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
   <section class="grid-2">
     <div class="panel" id="leaderboard" aria-labelledby="lb-h">
       <div class="panel-head">
-        <h3 class="panel-title" id="lb-h">Most Affected States</h3>
+        <h3 class="panel-title" id="lb-h">Most Affected</h3>
         <span class="panel-pill" id="lb-pill">Top 10</span>
+      </div>
+      <div class="lb-tabs" role="tablist" aria-label="Leaderboard view">
+        <button data-tab="state" class="active" role="tab" aria-selected="true">By State</button>
+        <button data-tab="utility" role="tab" aria-selected="false">By Utility</button>
       </div>
       <div class="lb" id="lb-list" role="list">
         <div class="lb-empty">Waiting for live feed…</div>
@@ -1178,7 +1473,37 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
       <div id="detail-body">
         <div class="detail-empty">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div>Tap any state on the map to see customer counts, county-level outages, and estimated restoration windows.</div>
+          <div>Tap any state on the map (or row in the leaderboard) to see customer counts, county-level outages, and reporting utilities.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outage Detail Cards (state + utility breakdown) -->
+  <section id="breakdown" class="breakdown-section">
+    <div class="breakdown-head">
+      <h2 class="breakdown-title">Outage Breakdown</h2>
+      <p class="breakdown-sub">Detailed cards for every state and utility currently reporting outages through ODIN.</p>
+    </div>
+
+    <div class="breakdown-grid">
+      <div class="breakdown-col">
+        <div class="breakdown-col-head">
+          <h3>Outages by State</h3>
+          <span class="bk-count" id="bk-state-count">—</span>
+        </div>
+        <div class="card-grid" id="state-cards">
+          <div class="lb-empty">Loading…</div>
+        </div>
+      </div>
+
+      <div class="breakdown-col">
+        <div class="breakdown-col-head">
+          <h3>Outages by Utility</h3>
+          <span class="bk-count" id="bk-util-count">—</span>
+        </div>
+        <div class="card-grid" id="utility-cards">
+          <div class="lb-empty">Loading…</div>
         </div>
       </div>
     </div>
@@ -1199,16 +1524,22 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
   <section id="about" class="content-section">
     <h2>About this tracker</h2>
     <p style="color:var(--text-soft); margin-top:0;">
-      <strong>NEPA-PRO Power Tracker</strong> is a free public-good tool that aggregates real-time power outage data across the United States. We use the
-      <a href="https://odin.ornl.gov/" target="_blank" rel="noopener" style="color:var(--accent)">Outage Data Initiative Nationwide (ODIN)</a> dataset
-      operated by Oak Ridge National Laboratory and the U.S. Department of Energy's Office of Electricity, plus the National Weather Service alerts API.
+      <strong>NEPA-PRO Power Tracker</strong> is a free public-good tool that surfaces real-time power outage data published through
+      <a href="https://odin.ornl.gov/" target="_blank" rel="noopener" style="color:var(--accent)">ODIN (Outage Data Initiative Nationwide)</a>,
+      a US Department of Energy / Oak Ridge National Laboratory program, alongside active NOAA National Weather Service alerts.
       Built and maintained by <a href="https://nepa-pro.com" target="_blank" rel="noopener" style="color:var(--accent)">NEPA-PRO</a>,
       a Veteran-owned property maintenance, renovation, and solar-ready construction firm based in Northeast Pennsylvania.
     </p>
     <p style="color:var(--text-soft);">
-      The map updates every five minutes while open. State totals and rankings are computed in your browser from county-level utility reports —
-      nothing is logged on our side. This tool is informational; for emergencies always call <strong>911</strong>, and report your specific outage
-      to your local utility provider so they can dispatch crews.
+      <strong>About coverage:</strong> ODIN is voluntary. As of 2024, roughly <strong>150+ utilities serving ~45 million customers</strong>
+      report into the feed — about one quarter of the ~165 million US electric customers. States and counties without a participating
+      utility are shown as striped "no data" regions, not as zero outages. Always check your own utility's outage page for the most
+      authoritative status in your service area.
+    </p>
+    <p style="color:var(--text-soft);">
+      The map refreshes every five minutes while open. State and utility totals are aggregated in your browser from raw ODIN records — no
+      logging on our side. This tool is informational; for emergencies always call <strong>911</strong>, and report your specific outage to
+      your local utility provider so they can dispatch crews.
     </p>
   </section>
 
@@ -1217,23 +1548,27 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
 
     <details open>
       <summary>Where does the outage data come from?</summary>
-      <p>Counts come from <strong>ODIN</strong> (Outage Data Initiative Nationwide) — a free public dataset led by Oak Ridge National Laboratory and the U.S. Department of Energy's Office of Electricity. Participating utilities push their outage counts at the county level every 5 to 15 minutes. Coverage is growing but does not yet include every utility in the country.</p>
+      <p>Counts come from <strong>ODIN</strong> (Outage Data Initiative Nationwide) — a free public dataset led by Oak Ridge National Laboratory and the U.S. Department of Energy's Office of Electricity. Participating utilities push their outage counts at the county level every 5 to 15 minutes.</p>
+    </details>
+    <details open>
+      <summary>How much of the US does this actually cover?</summary>
+      <p>Honest answer: about one-quarter. ODIN is opt-in for utilities. As of 2024, participation included roughly <strong>150+ utilities serving ~45 million customers</strong>, out of ~165 million total US electric customers and 3,000+ utilities nationwide. We render non-participating states with a striped "no data" fill so you can tell at a glance where ODIN has visibility and where it doesn't. For authoritative status in your service area, always check your own utility's outage page.</p>
     </details>
     <details>
       <summary>How often does the data refresh?</summary>
-      <p>While the app is open, it pulls a fresh feed every <strong>five minutes</strong>. You can also pull-to-refresh on mobile, or click the status pill in the header to force a manual refresh.</p>
+      <p>While the app is open, it pulls a fresh feed every <strong>five minutes</strong>. You can also click the status pill in the header to force a manual refresh.</p>
     </details>
     <details>
       <summary>What does ETR mean?</summary>
-      <p><strong>ETR</strong> stands for Estimated Time of Restoration — the utility's projected time for power to come back on at an outage location. Not every utility reports an ETR; when present we show it on the state detail panel.</p>
+      <p><strong>ETR</strong> stands for Estimated Time of Restoration — the utility's projected time for power to come back on at an outage location. Not every utility reports an ETR; when present we surface it in the state detail panel.</p>
     </details>
     <details>
-      <summary>Why does my state show zero outages?</summary>
-      <p>Either no participating utility is reporting an active outage in your area, or your local utility isn't yet integrated with ODIN. If you have a confirmed outage and don't see it here, check your utility's own outage map directly — they may not be a current ODIN reporter.</p>
+      <summary>Why does my state show "no data" instead of zero?</summary>
+      <p>It means no utility in that state is currently submitting data to ODIN — not that there are zero outages. There could be active outages in your area that simply aren't in this feed. Check your utility's own outage map directly for the real picture.</p>
     </details>
     <details>
       <summary>How is "duration" calculated?</summary>
-      <p>For each active outage record, we compute the time elapsed since the utility first reported it. The "Avg Outage Age" KPI is the customer-weighted mean of those elapsed times. It's a lagging signal: very long durations usually point to widespread storm damage where crews are still restoring service.</p>
+      <p>For each active outage record, we compute the time elapsed since the utility first reported it. The "Avg Outage Age" KPI is the customer-weighted mean of those elapsed times. It's a lagging signal: long durations usually mean widespread storm damage where crews are still restoring service.</p>
     </details>
     <details>
       <summary>Can I install this as an app?</summary>
@@ -1272,13 +1607,13 @@ footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
     <span>Stats</span>
   </button>
+  <button data-jump="#breakdown" aria-label="Outage breakdown">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Detail</span>
+  </button>
   <button data-jump="#weather" aria-label="Weather alerts">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11-2 4 4 0 0 0-1 8z"/></svg>
     <span>Weather</span>
-  </button>
-  <button data-jump="#faq" aria-label="Frequently asked questions">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 5 2c-1 .8-2 1.2-2 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
-    <span>FAQ</span>
   </button>
 </nav>
 
@@ -1329,9 +1664,11 @@ const STATE_ABBR_TO_FIPS = Object.fromEntries(
 const APP = {
   records: [],           // raw ODIN records
   byState: new Map(),    // fips → { customers, events, percent, counties, oldest }
+  byUtility: new Map(),  // utility_name → { customers, events, states, ... }
   weatherAlerts: [],
   selectedFips: null,
   viewMode: 'customers', // 'customers' | 'percent'
+  lbTab: 'state',        // 'state' | 'utility' — leaderboard tab
   topo: null,
   geoJson: null,
   lastUpdate: null,
@@ -1383,7 +1720,7 @@ function showLoading(on) {
      /api/explore/v2.1/catalog/datasets/{id}/records
    Pull a generous page (CORS-enabled), then aggregate client-side.
    ------------------------------------------------------------ */
-const ODIN_ENDPOINT = 'https://ornl.opendatasoft.com/api/explore/v2.1/catalog/datasets/odin-real-time-outages-county/records?limit=100';
+const ODIN_ENDPOINT = 'https://openenergyhub.ornl.gov/api/explore/v2.1/catalog/datasets/odin-real-time-outages-county/records?limit=100';
 
 async function fetchOdin() {
   setStatus('Fetching outages…');
@@ -1407,6 +1744,19 @@ async function fetchOdin() {
 
     // Opendatasoft v2.1 returns flat objects in `results`; older `records[].fields`
     const flat = records.map(r => r.fields ? r.fields : r);
+
+    // Diagnostic: log field names from first record on first page to verify pickField() targets
+    if (i === 0 && offset === 0 && flat.length > 0 && !APP._loggedSchema) {
+      APP._loggedSchema = true;
+      const sample = flat[0];
+      console.groupCollapsed('%c[ODIN schema check]','color:#ffb800;font-weight:700');
+      console.log('Total fields returned:', Object.keys(sample).length);
+      console.log('Field names:', Object.keys(sample));
+      console.log('First record sample:', sample);
+      console.log('total_count (if reported):', json.total_count);
+      console.groupEnd();
+    }
+
     allRecords = allRecords.concat(flat);
 
     if (records.length < pageSize) break;
@@ -1528,6 +1878,71 @@ function aggregateByState() {
 }
 
 /* ------------------------------------------------------------
+   Aggregate ODIN records → byUtility map
+   Groups by utility_name (or similar) and rolls up customers + states.
+   ------------------------------------------------------------ */
+function aggregateByUtility() {
+  const byUtility = new Map();
+  const now = Date.now();
+
+  for (const r of APP.records) {
+    const utility = pickField(r, ['utility_name', 'utility', 'company', 'operator']);
+    if (!utility) continue;
+    const key = String(utility).trim();
+    if (!key) continue;
+
+    const customers = Number(pickField(r, [
+      'customers_out', 'customers_affected', 'numberofcustomersaffected',
+      'customer_count', 'customers'
+    ])) || 0;
+    const tracked = Number(pickField(r, [
+      'customers_tracked', 'customers_served', 'total_customers'
+    ])) || 0;
+    const startTimeRaw = pickField(r, [
+      'outage_start_time', 'start_time', 'outagestart', 'event_start'
+    ]);
+    let startTime = null;
+    if (startTimeRaw) {
+      const d = new Date(startTimeRaw);
+      if (!isNaN(d.getTime())) startTime = d;
+    }
+    const fips = recordStateFips(r);
+
+    if (!byUtility.has(key)) {
+      byUtility.set(key, {
+        name: key,
+        customers: 0,
+        tracked: 0,
+        events: 0,
+        states: new Set(),
+        ageWeightedSum: 0,
+        ageWeightedCustomers: 0,
+        oldestStart: null,
+      });
+    }
+    const U = byUtility.get(key);
+    U.customers += customers;
+    U.tracked += tracked;
+    U.events += 1;
+    if (fips && FIPS_TO_STATE[fips]) U.states.add(FIPS_TO_STATE[fips].a);
+    if (startTime && (!U.oldestStart || startTime < U.oldestStart)) U.oldestStart = startTime;
+    if (startTime && customers > 0) {
+      const age = now - startTime.getTime();
+      U.ageWeightedSum += age * customers;
+      U.ageWeightedCustomers += customers;
+    }
+  }
+
+  for (const U of byUtility.values()) {
+    U.percent = U.tracked > 0 ? (U.customers / U.tracked) * 100 : 0;
+    U.avgAge = U.ageWeightedCustomers > 0 ? U.ageWeightedSum / U.ageWeightedCustomers : null;
+  }
+
+  APP.byUtility = byUtility;
+  return byUtility;
+}
+
+/* ------------------------------------------------------------
    NOAA NWS alerts (free, public, no key)
    ------------------------------------------------------------ */
 async function fetchWeatherAlerts() {
@@ -1572,54 +1987,65 @@ async function loadTopo() {
 }
 
 /* ------------------------------------------------------------
-   Color scale
+   Color scale — bin-based, matches the legend swatches
+   Customer bins: <10K, 10K–50K, 50K–100K, 100K–500K, 500K+
+   Percent bins:  <0.5%, 0.5–2%, 2–5%, 5–15%, 15%+
    ------------------------------------------------------------ */
-function colorFor(value, max, mode) {
-  if (!value || !max) return '#1a2238';
-  // Log-ish ramp so dense events don't wash out small ones
-  const t = Math.min(1, Math.log10(value + 1) / Math.log10(max + 1));
-  if (t < 0.5) {
-    // dark navy → amber
-    const k = t / 0.5;
-    return d3.interpolateRgb('#1a2238', '#ffb800')(k);
-  } else {
-    // amber → red
-    const k = (t - 0.5) / 0.5;
-    return d3.interpolateRgb('#ffb800', '#ff3d57')(k);
-  }
+const BIN_COLORS = {
+  1: '#1a2238', // <10K  (navy)
+  2: '#2b5fae', // 10–50K (blue)
+  3: '#ffb800', // 50–100K (amber)
+  4: '#ff7a3d', // 100–500K (orange)
+  5: '#ff3d57', // 500K+ (red)
+};
+function customerBin(v) {
+  if (v < 10000)  return 1;
+  if (v < 50000)  return 2;
+  if (v < 100000) return 3;
+  if (v < 500000) return 4;
+  return 5;
+}
+function percentBin(p) {
+  if (p < 0.5)  return 1;
+  if (p < 2)    return 2;
+  if (p < 5)    return 3;
+  if (p < 15)   return 4;
+  return 5;
+}
+function colorFor(value, mode) {
+  if (value == null || value <= 0) return null; // null = no-data sentinel
+  const tier = mode === 'percent' ? percentBin(value) : customerBin(value);
+  return BIN_COLORS[tier];
 }
 
 /* ------------------------------------------------------------
-   Draw map
+   Draw map — striped fill for "no data" states (no participating utility)
    ------------------------------------------------------------ */
 function drawMap() {
   const svg = d3.select('#usMap');
-  svg.selectAll('*').remove();
+  // Preserve defs (no-data pattern) — only remove drawn paths
+  svg.selectAll('g.states-layer').remove();
 
   const width = 960, height = 600;
   const path = d3.geoPath(d3.geoAlbersUsa().scale(1200).translate([width/2, height/2]));
 
-  // Compute max for current view
-  let max = 0;
-  for (const S of APP.byState.values()) {
-    const v = APP.viewMode === 'percent' ? S.percent : S.customers;
-    if (v > max) max = v;
-  }
-  document.getElementById('legend-max').textContent =
-    APP.viewMode === 'percent' ? fmt.pct(max) : fmt.compact(max) + ' out';
-
-  const g = svg.append('g');
+  const g = svg.append('g').attr('class', 'states-layer');
   g.selectAll('path')
     .data(APP.geoJson.features)
     .enter().append('path')
-      .attr('class', 'state')
+      .attr('class', d => {
+        const fips = String(d.id).padStart(2, '0');
+        const S = APP.byState.get(fips);
+        return 'state' + (!S || S.customers === 0 ? ' state-nodata' : '');
+      })
       .attr('d', path)
       .attr('fill', d => {
         const fips = String(d.id).padStart(2, '0');
         const S = APP.byState.get(fips);
-        if (!S) return '#1a2238';
+        if (!S || S.customers === 0) return 'url(#noDataPattern)';
         const v = APP.viewMode === 'percent' ? S.percent : S.customers;
-        return colorFor(v, max, APP.viewMode);
+        const c = colorFor(v, APP.viewMode);
+        return c || 'url(#noDataPattern)';
       })
       .attr('data-fips', d => String(d.id).padStart(2, '0'))
       .attr('tabindex', 0)
@@ -1628,7 +2054,8 @@ function drawMap() {
         const fips = String(d.id).padStart(2, '0');
         const meta = FIPS_TO_STATE[fips];
         const S = APP.byState.get(fips);
-        return (meta ? meta.n : 'State') + ': ' + (S ? fmt.num(S.customers) + ' customers out' : 'no outages reported');
+        if (!S || S.customers === 0) return (meta ? meta.n : 'State') + ': no participating utility data';
+        return (meta ? meta.n : 'State') + ': ' + fmt.num(S.customers) + ' customers out';
       })
       .on('mouseenter', (e, d) => showTooltip(e, d))
       .on('mousemove', (e, d) => moveTooltip(e))
@@ -1648,20 +2075,30 @@ function drawMap() {
 }
 
 /* ------------------------------------------------------------
-   Tooltip
+   Tooltip — richer detail matching PowerOutage.com layout
    ------------------------------------------------------------ */
 const TT = document.getElementById('map-tooltip');
 function showTooltip(e, d) {
   const fips = String(d.id).padStart(2, '0');
   const meta = FIPS_TO_STATE[fips];
   const S = APP.byState.get(fips);
-  TT.innerHTML = `
-    <strong>${meta ? meta.n : 'Unknown'}</strong>
-    <div class="tt-row"><span>Out</span><b>${S ? fmt.num(S.customers) : '0'}</b></div>
-    <div class="tt-row"><span>Active</span><span>${S ? S.events : 0}</span></div>
-    <div class="tt-row"><span>% out</span><span>${S ? fmt.pct(S.percent) : '—'}</span></div>
-    <div class="tt-row"><span>Avg age</span><span>${S ? fmt.duration(S.avgAge) : '—'}</span></div>
-  `;
+
+  if (!S || S.customers === 0) {
+    TT.innerHTML = `
+      <strong>${meta ? meta.n : 'Unknown'}</strong>
+      <div class="tt-row tt-nodata"><span>No participating utility data</span></div>
+      <div class="tt-hint">Check your local utility's outage map for status.</div>
+    `;
+  } else {
+    TT.innerHTML = `
+      <strong>${meta ? meta.n : 'Unknown'}</strong>
+      <div class="tt-row"><span>Customers Out</span><b>${fmt.num(S.customers)}</b></div>
+      <div class="tt-row"><span>Customers Tracked</span><span>${S.tracked > 0 ? fmt.num(S.tracked) : '—'}</span></div>
+      <div class="tt-row"><span>Outage %</span><span>${fmt.pct(S.percent)}</span></div>
+      <div class="tt-row"><span>Active reports</span><span>${S.events}</span></div>
+      <div class="tt-row"><span>Avg age</span><span>${fmt.duration(S.avgAge)}</span></div>
+    `;
+  }
   TT.classList.add('visible');
   moveTooltip(e);
 }
@@ -1790,6 +2227,12 @@ function renderKpis() {
 }
 
 function renderLeaderboard() {
+  // Renders the active tab — state or utility
+  if (APP.lbTab === 'utility') return renderUtilityLeaderboard();
+  return renderStateLeaderboard();
+}
+
+function renderStateLeaderboard() {
   const list = document.getElementById('lb-list');
   const arr = Array.from(APP.byState.values())
     .filter(s => s.customers > 0)
@@ -1824,6 +2267,147 @@ function renderLeaderboard() {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectState(row.dataset.fips); }
     });
   });
+}
+
+function renderUtilityLeaderboard() {
+  const list = document.getElementById('lb-list');
+  if (!APP.byUtility || APP.byUtility.size === 0) {
+    list.innerHTML = '<div class="lb-empty">No utility data available in current feed.</div>';
+    document.getElementById('lb-pill').textContent = '0 utilities';
+    return;
+  }
+  const arr = Array.from(APP.byUtility.values())
+    .filter(u => u.customers > 0)
+    .sort((a, b) => b.customers - a.customers)
+    .slice(0, 10);
+
+  if (arr.length === 0) {
+    list.innerHTML = '<div class="lb-empty">No utility-reported outages active right now.</div>';
+    document.getElementById('lb-pill').textContent = '0 utilities';
+    return;
+  }
+  document.getElementById('lb-pill').textContent = arr.length + ' utilit' + (arr.length === 1 ? 'y' : 'ies');
+
+  const max = arr[0].customers;
+  list.innerHTML = arr.map((U, i) => {
+    const w = (U.customers / max) * 100;
+    const stateList = Array.from(U.states).slice(0, 3).join(', ') + (U.states.size > 3 ? ` +${U.states.size - 3}` : '');
+    return `
+      <div class="lb-row utility" role="listitem" tabindex="0" style="--w:${w}%;">
+        <div class="lb-rank">#${i + 1}</div>
+        <div>
+          <div class="lb-name">${escapeHtml(U.name)}</div>
+          <div class="lb-meta">${U.events} reports · ${stateList || '—'} · age ${fmt.duration(U.avgAge)}</div>
+        </div>
+        <div class="lb-val">${fmt.compact(U.customers)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ------------------------------------------------------------
+   Detail cards — full breakdown grid (state + utility)
+   ------------------------------------------------------------ */
+function tierFor(customers) {
+  if (customers >= 500000) return 5;
+  if (customers >= 100000) return 4;
+  if (customers >= 50000)  return 3;
+  if (customers >= 10000)  return 2;
+  return 1;
+}
+
+function renderDetailCards() {
+  renderStateCards();
+  renderUtilityCards();
+}
+
+function renderStateCards() {
+  const box = document.getElementById('state-cards');
+  const arr = Array.from(APP.byState.values())
+    .filter(s => s.customers > 0)
+    .sort((a, b) => b.customers - a.customers);
+
+  document.getElementById('bk-state-count').textContent =
+    arr.length + ' state' + (arr.length === 1 ? '' : 's');
+
+  if (arr.length === 0) {
+    box.innerHTML = '<div class="lb-empty">No state-level outages currently reported.</div>';
+    return;
+  }
+
+  box.innerHTML = arr.map(S => {
+    const tier = tierFor(S.customers);
+    return `
+      <div class="outage-card tier-${tier}" data-fips="${S.fips}" tabindex="0" role="button" aria-label="${escapeHtml(S.name)} detail">
+        <div class="oc-name">${escapeHtml(S.name)}</div>
+        <div class="oc-customers">${fmt.num(S.customers)}</div>
+        <div class="oc-stats">
+          <span class="oc-stat">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <b>${S.tracked > 0 ? fmt.num(S.tracked) : '—'}</b> tracked
+          </span>
+          <span class="oc-stat percent">
+            <b>${fmt.pct(S.percent)}</b> out
+          </span>
+          <span class="oc-stat">
+            ${S.events} active · ${S.utilities.size} util${S.utilities.size === 1 ? '' : 's'}
+          </span>
+          <span class="oc-stat">
+            age <b>${fmt.duration(S.avgAge)}</b>
+          </span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  box.querySelectorAll('.outage-card').forEach(card => {
+    card.addEventListener('click', () => selectState(card.dataset.fips));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectState(card.dataset.fips); }
+    });
+  });
+}
+
+function renderUtilityCards() {
+  const box = document.getElementById('utility-cards');
+  if (!APP.byUtility) { box.innerHTML = '<div class="lb-empty">No utility data.</div>'; return; }
+  const arr = Array.from(APP.byUtility.values())
+    .filter(u => u.customers > 0)
+    .sort((a, b) => b.customers - a.customers);
+
+  document.getElementById('bk-util-count').textContent =
+    arr.length + ' utilit' + (arr.length === 1 ? 'y' : 'ies');
+
+  if (arr.length === 0) {
+    box.innerHTML = '<div class="lb-empty">No utility-reported outages currently active.</div>';
+    return;
+  }
+
+  box.innerHTML = arr.map(U => {
+    const tier = tierFor(U.customers);
+    const stateList = Array.from(U.states).slice(0, 4).join(', ') +
+                      (U.states.size > 4 ? ` +${U.states.size - 4} more` : '');
+    return `
+      <div class="outage-card tier-${tier}">
+        <div class="oc-name">${escapeHtml(U.name)}</div>
+        <div class="oc-customers">${fmt.num(U.customers)}</div>
+        <div class="oc-stats">
+          <span class="oc-stat">
+            <b>${U.tracked > 0 ? fmt.num(U.tracked) : '—'}</b> tracked
+          </span>
+          <span class="oc-stat percent">
+            <b>${fmt.pct(U.percent)}</b> out
+          </span>
+          <span class="oc-stat">
+            ${U.events} report${U.events === 1 ? '' : 's'} · ${U.states.size} state${U.states.size === 1 ? '' : 's'}
+          </span>
+          <span class="oc-stat">
+            ${stateList || '—'}
+          </span>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 function renderWeather() {
@@ -1865,10 +2449,12 @@ async function refreshAll() {
       fetchWeatherAlerts(),
     ]);
     aggregateByState();
+    aggregateByUtility();
     if (!APP.geoJson) await loadTopo();
     drawMap();
     renderKpis();
     renderLeaderboard();
+    renderDetailCards();
     renderDetail();
     renderWeather();
     setStatus('Live · ' + fmt.time(APP.lastUpdate));
@@ -1888,6 +2474,7 @@ async function refreshAll() {
       // Render empty states so leaderboard/weather have a message
       renderKpis();
       renderLeaderboard();
+      renderDetailCards();
       renderWeather();
     }
     showLoading(false);
@@ -1895,7 +2482,7 @@ async function refreshAll() {
 }
 
 /* ------------------------------------------------------------
-   Mode toggle
+   Mode toggle (Customers Out vs % Affected) — updates legend label
    ------------------------------------------------------------ */
 document.querySelectorAll('.map-controls button').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1904,7 +2491,43 @@ document.querySelectorAll('.map-controls button').forEach(btn => {
       b.setAttribute('aria-selected', b === btn);
     });
     APP.viewMode = btn.dataset.mode;
+    updateLegendLabels();
     drawMap();
+  });
+});
+
+function updateLegendLabels() {
+  const bins = document.getElementById('legend-bins');
+  if (!bins) return;
+  const label = bins.querySelector('.legend-label');
+  if (APP.viewMode === 'percent') {
+    label.textContent = '% Affected';
+    bins.querySelector('.bin-1').textContent = '< 0.5%';
+    bins.querySelector('.bin-2').textContent = '0.5–2%';
+    bins.querySelector('.bin-3').textContent = '2–5%';
+    bins.querySelector('.bin-4').textContent = '5–15%';
+    bins.querySelector('.bin-5').textContent = '15%+';
+  } else {
+    label.textContent = 'Customers Out';
+    bins.querySelector('.bin-1').textContent = '< 10K';
+    bins.querySelector('.bin-2').textContent = '10K–50K';
+    bins.querySelector('.bin-3').textContent = '50K–100K';
+    bins.querySelector('.bin-4').textContent = '100K–500K';
+    bins.querySelector('.bin-5').textContent = '500K+';
+  }
+}
+
+/* ------------------------------------------------------------
+   Leaderboard tab toggle (State / Utility)
+   ------------------------------------------------------------ */
+document.querySelectorAll('.lb-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lb-tabs button').forEach(b => {
+      b.classList.toggle('active', b === btn);
+      b.setAttribute('aria-selected', b === btn);
+    });
+    APP.lbTab = btn.dataset.tab; // 'state' or 'utility'
+    renderLeaderboard();
   });
 });
 

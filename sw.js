@@ -1,5 +1,5 @@
 /* NEPA-PRO Power Tracker — Service Worker */
-const VERSION = 'v1.0.0';
+const VERSION = 'v1.1.0';
 const SHELL_CACHE = 'power-shell-' + VERSION;
 const DATA_CACHE  = 'power-data-' + VERSION;
 
@@ -31,7 +31,9 @@ self.addEventListener('activate', (event) => {
 });
 
 function isApiRequest(url) {
-  return url.includes('ornl.opendatasoft.com') || url.includes('api.weather.gov');
+  return url.includes('openenergyhub.ornl.gov')
+      || url.includes('ornl.opendatasoft.com')  // legacy fallback during transition
+      || url.includes('api.weather.gov');
 }
 
 self.addEventListener('fetch', (event) => {
