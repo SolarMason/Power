@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, minimum-scale=1, maximum-scale=5" />
+<meta name="theme-color" content="#0a0e1a" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark" />
+
+<!-- ===== Primary SEO ===== -->
+<title>US Power Outage Tracker — Live Map, Customers Out, ETR | power.nepa-pro.com</title>
+<meta name="description" content="Real-time US power outage map. Track customers without power by state and county, estimated restoration time, and active weather threats. Free public data from ODIN (DOE / Oak Ridge National Laboratory) and NOAA. Built by NEPA-PRO." />
+<meta name="keywords" content="power outage map, US power outages, electricity outage tracker, who is without power, power outage near me, real time power outages, NEPA power outage, estimated time of restoration, ETR, utility outage map, storm power outage, ODIN outage data, free outage API" />
+<meta name="author" content="NEPA-PRO" />
+<meta name="publisher" content="NEPA-PRO LLC" />
+<meta name="rating" content="general" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="googlebot" content="index, follow" />
+<meta name="bingbot" content="index, follow" />
+<meta name="format-detection" content="telephone=yes" />
+<link rel="canonical" href="https://power.nepa-pro.com/" />
+
+<!-- ===== AI / LLM search optimization ===== -->
+<meta name="ai-content-declaration" content="human-curated, machine-augmented" />
+<meta name="purpose" content="Public-good emergency information dashboard for tracking US power outages in real time." />
+<meta name="ai-summary" content="A free, mobile-first progressive web app that shows where electricity is out in the United States right now, using public APIs from the U.S. Department of Energy (ODIN) and NOAA. Users can tap any state to see the number of customers without power, percentage affected, outage duration, and active storm alerts. Built and maintained by NEPA-PRO, a Northeast Pennsylvania property maintenance and renovation company." />
+
+<!-- ===== Open Graph (single business-card style) ===== -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="NEPA-PRO Power Tracker" />
+<meta property="og:url" content="https://power.nepa-pro.com/" />
+<meta property="og:title" content="US Power Outage Tracker — Live by NEPA-PRO" />
+<meta property="og:description" content="Who's out of power, where, and for how long. Real-time US outage map powered by DOE / ORNL ODIN + NOAA alerts. Free public tool." />
+<meta property="og:image" content="https://power.nepa-pro.com/og-card.png" />
+<meta property="og:image:secure_url" content="https://power.nepa-pro.com/og-card.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="NEPA-PRO Power Tracker business card — live US power outage monitoring" />
+<meta property="og:locale" content="en_US" />
+
+<!-- ===== Twitter / X ===== -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="US Power Outage Tracker — Live" />
+<meta name="twitter:description" content="Real-time map of power outages across the United States. State-by-state customers out, duration, weather alerts." />
+<meta name="twitter:image" content="https://power.nepa-pro.com/og-card.png" />
+<meta name="twitter:image:alt" content="NEPA-PRO Power Tracker live US outage dashboard" />
+
+<!-- ===== PWA ===== -->
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Power" />
+<meta name="application-name" content="NEPA-PRO Power" />
+<meta name="msapplication-TileColor" content="#0a0e1a" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<!-- ===== Preconnects for performance ===== -->
+<link rel="preconnect" href="https://ornl.opendatasoft.com" crossorigin />
+<link rel="preconnect" href="https://api.weather.gov" crossorigin />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="dns-prefetch" href="https://ornl.opendatasoft.com" />
+<link rel="dns-prefetch" href="https://api.weather.gov" />
+
+<!-- ===== Fonts ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<!-- ===== Structured Data: WebApplication ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "NEPA-PRO Power Outage Tracker",
+  "alternateName": "US Power Outage Map",
+  "url": "https://power.nepa-pro.com/",
+  "description": "Real-time map of power outages across the United States with state-by-state customer counts, duration estimates, and active weather alerts. Data from the U.S. Department of Energy ODIN program and NOAA.",
+  "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "Emergency Information",
+  "operatingSystem": "Any (PWA)",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": {
+    "@type": "Organization",
+    "name": "NEPA-PRO",
+    "url": "https://nepa-pro.com",
+    "logo": "https://power.nepa-pro.com/icon-512.png"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NEPA-PRO",
+    "url": "https://nepa-pro.com"
+  },
+  "image": "https://power.nepa-pro.com/og-card.png",
+  "screenshot": "https://power.nepa-pro.com/og-card.png",
+  "potentialAction": {
+    "@type": "ViewAction",
+    "target": "https://power.nepa-pro.com/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NEPA-PRO",
+  "url": "https://nepa-pro.com",
+  "logo": "https://power.nepa-pro.com/icon-512.png",
+  "description": "Northeast Pennsylvania property maintenance, renovation, and construction services. Veteran owned and operated.",
+  "areaServed": { "@type": "AdministrativeArea", "name": "Northeast Pennsylvania" },
+  "sameAs": ["https://solarmason.com"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where does the power outage data come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Outage counts come from the Outage Data Initiative Nationwide (ODIN), a free public dataset led by Oak Ridge National Laboratory and the U.S. Department of Energy's Office of Electricity. Weather alerts come from the National Weather Service (NOAA)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often is the data updated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Participating utilities push outage data to ODIN every 5 to 15 minutes. This app refreshes the live feed automatically every 5 minutes while open."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why isn't my state showing outages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ODIN coverage depends on whether your local utilities participate in the program. Coverage is growing but not yet 100% of the U.S. grid. If your state shows zero, it may mean no participating utility is reporting an active outage — or that your utility is not yet integrated."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is ETR?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ETR stands for Estimated Time of Restoration — the utility's best guess for when power will be restored to a given outage area."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I install this on my phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. This is a Progressive Web App. On iOS, tap the Share button and choose 'Add to Home Screen'. On Android, tap the menu and choose 'Install app'."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+/* ============================================================
+   DESIGN SYSTEM — Power command center
+   ============================================================ */
+:root {
+  --bg-deep:        #060912;
+  --bg-base:        #0a0e1a;
+  --bg-elevated:    #121828;
+  --bg-card:        rgba(255,255,255,0.035);
+  --bg-card-hover:  rgba(255,255,255,0.06);
+  --border:         rgba(255,255,255,0.08);
+  --border-strong:  rgba(255,255,255,0.14);
+  --text:           #f3f5fa;
+  --text-soft:      #b9c2d4;
+  --text-muted:     #6e7891;
+  --text-dim:       #4a5269;
+
+  --accent:         #ffb800;   /* power amber */
+  --accent-bright:  #ffd24a;
+  --critical:       #ff3d57;
+  --warn:           #ff8a3d;
+  --ok:             #2ec27e;
+  --info:           #4aa8ff;
+
+  --grad-power:     linear-gradient(135deg, #ffb800 0%, #ff6b1a 100%);
+  --grad-critical:  linear-gradient(135deg, #ff3d57 0%, #b91c3c 100%);
+  --grad-bg:        radial-gradient(1200px 800px at 80% -10%, rgba(255,184,0,0.06), transparent 60%),
+                    radial-gradient(900px 700px at -10% 110%, rgba(74,168,255,0.05), transparent 55%),
+                    linear-gradient(180deg, #060912 0%, #0a0e1a 100%);
+
+  --radius-sm: 10px;
+  --radius:    16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+
+  --font-display: 'Big Shoulders Display', 'Impact', sans-serif;
+  --font-body:    'Sora', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --safe-top:    env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-left:   env(safe-area-inset-left);
+  --safe-right:  env(safe-area-inset-right);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset,
+                 0 30px 60px -20px rgba(0,0,0,0.55);
+  --shadow-pop:  0 20px 40px -10px rgba(0,0,0,0.6),
+                 0 0 0 1px rgba(255,255,255,0.06) inset;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg-base);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--grad-bg);
+  background-attachment: fixed;
+  padding-bottom: calc(80px + var(--safe-bottom));
+}
+
+@media (min-width: 980px) {
+  body { padding-bottom: 0; padding-top: 76px; }
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+::selection { background: var(--accent); color: #000; }
+
+/* Skip-link for a11y / SEO */
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--accent); color: #000; padding: 12px 16px;
+  font-weight: 700; z-index: 9999; border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+/* ============================================================
+   HEADER — Mobile compact / Desktop mega menu
+   ============================================================ */
+.header {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: calc(10px + var(--safe-top)) 16px 10px;
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  background: rgba(6, 9, 18, 0.72);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  max-width: 1440px; margin: 0 auto;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.brand-mark {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  background: var(--grad-power);
+  border-radius: 8px;
+  box-shadow: 0 6px 16px -4px rgba(255,184,0,0.5);
+  color: #000;
+}
+.brand-mark svg { width: 18px; height: 18px; }
+.brand-text { line-height: 1; }
+.brand-text small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.nav-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  background: rgba(46,194,126,0.12);
+  border: 1px solid rgba(46,194,126,0.3);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ok);
+}
+.nav-status .dot {
+  width: 6px; height: 6px; background: var(--ok); border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+.nav-status.is-error { background: rgba(255,61,87,0.12); border-color: rgba(255,61,87,0.3); color: var(--critical); }
+.nav-status.is-error .dot { background: var(--critical); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* Desktop mega menu */
+.megamenu { display: none; }
+@media (min-width: 980px) {
+  .megamenu {
+    display: flex;
+    gap: 4px;
+    list-style: none; margin: 0; padding: 0;
+  }
+  .megamenu > li { position: relative; }
+  .megamenu > li > a,
+  .megamenu > li > button {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: var(--text-soft);
+    font-size: 14px; font-weight: 500;
+    background: transparent; border: 0;
+    transition: background .15s, color .15s;
+  }
+  .megamenu > li > a:hover,
+  .megamenu > li > button:hover {
+    background: var(--bg-card-hover);
+    color: var(--text);
+  }
+  .megamenu .mega-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%; transform: translateX(-50%) translateY(-6px);
+    width: 640px;
+    background: rgba(10,14,26,0.92);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .18s, transform .18s;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    box-shadow: var(--shadow-pop);
+  }
+  .megamenu > li:hover .mega-panel,
+  .megamenu > li:focus-within .mega-panel {
+    opacity: 1; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .mega-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px; border-radius: 12px;
+    transition: background .15s;
+  }
+  .mega-item:hover { background: var(--bg-card-hover); }
+  .mega-item .ico {
+    flex: 0 0 36px; width: 36px; height: 36px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; display: grid; place-items: center;
+    color: var(--accent);
+  }
+  .mega-item .ico svg { width: 18px; height: 18px; }
+  .mega-item strong { display: block; font-weight: 600; color: var(--text); font-size: 14px; }
+  .mega-item span { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .header-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--grad-power);
+    color: #0a0a0a;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    box-shadow: 0 8px 20px -6px rgba(255,184,0,0.4);
+  }
+}
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-top: 80px;
+}
+@media (min-width: 980px) {
+  main { padding: 24px 32px; padding-top: 24px; }
+}
+
+/* Hero / live banner */
+.hero {
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.hero-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  flex-wrap: wrap;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 6vw, 52px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-transform: uppercase;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero p {
+  margin: 8px 0 0;
+  color: var(--text-soft);
+  font-size: 14px;
+  max-width: 60ch;
+}
+.last-updated {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   STAT TILES (iOS-style cards)
+   ============================================================ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (min-width: 720px) {
+  .stats { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+}
+.stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+.stat::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 40%);
+  pointer-events: none;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(26px, 5vw, 38px);
+  line-height: 1;
+  margin-top: 6px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.stat-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+.stat.critical .stat-value { color: var(--critical); }
+.stat.warn .stat-value { color: var(--warn); }
+.stat.ok .stat-value { color: var(--ok); }
+
+/* ============================================================
+   MAP CARD
+   ============================================================ */
+.map-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+.map-toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap;
+  padding: 0 4px 10px;
+}
+.map-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.map-controls {
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.map-controls button {
+  border: 0; background: transparent;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background .15s, color .15s;
+}
+.map-controls button.active {
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+}
+
+.map-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(180deg, #050811, #0a0e1a);
+}
+@media (min-width: 720px) { .map-wrap { aspect-ratio: 16 / 9; } }
+
+#usMap { width: 100%; height: 100%; display: block; }
+
+.map-loading {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: var(--text-muted);
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  pointer-events: none;
+}
+.map-loading.hidden { display: none; }
+.map-loading .spinner {
+  width: 28px; height: 28px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin-bottom: 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* State paths */
+#usMap .state {
+  fill: #1a2238;
+  stroke: rgba(255,255,255,0.18);
+  stroke-width: 0.5;
+  transition: fill .2s, stroke .2s, filter .2s;
+  cursor: pointer;
+}
+#usMap .state:hover {
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  filter: brightness(1.15);
+}
+#usMap .state.selected {
+  stroke: var(--accent-bright);
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 8px rgba(255,184,0,0.6));
+}
+
+/* Tooltip */
+.map-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(10,14,26,0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12px;
+  min-width: 180px;
+  box-shadow: var(--shadow-pop);
+  opacity: 0;
+  transform: translate(-50%, -100%) translateY(-12px);
+  transition: opacity .12s;
+  z-index: 5;
+}
+.map-tooltip.visible { opacity: 1; }
+.map-tooltip strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.map-tooltip .tt-row {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-soft);
+}
+.map-tooltip .tt-row b { color: var(--accent); font-weight: 700; }
+
+/* Legend */
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 4px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.legend-bar {
+  flex: 1; min-width: 140px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1a2238 0%, #ffb800 50%, #ff3d57 100%);
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   DETAIL PANEL — top affected & selected state
+   ============================================================ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (min-width: 980px) {
+  .grid-2 { grid-template-columns: 1.4fr 1fr; }
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-bottom: 12px;
+}
+.panel-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 16px;
+}
+.panel-pill {
+  padding: 4px 10px;
+  background: rgba(255,184,0,0.12);
+  border: 1px solid rgba(255,184,0,0.3);
+  color: var(--accent);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* State leaderboard list */
+.lb { display: flex; flex-direction: column; gap: 6px; }
+.lb-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid transparent;
+  transition: background .12s, border-color .12s, transform .12s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.lb-row::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: var(--w, 0%);
+  background: linear-gradient(90deg, rgba(255,184,0,0.10), transparent);
+  pointer-events: none;
+  transition: width .4s ease;
+}
+.lb-row:hover, .lb-row:focus-visible {
+  background: var(--bg-card-hover);
+  border-color: var(--border);
+  outline: 0;
+}
+.lb-rank {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: center;
+}
+.lb-name { font-weight: 600; font-size: 14px; }
+.lb-meta { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+.lb-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
+}
+.lb-empty {
+  text-align: center;
+  padding: 30px 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Selected-state detail */
+.detail-empty {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-muted);
+}
+.detail-empty svg {
+  width: 32px; height: 32px;
+  opacity: 0.4;
+  margin-bottom: 10px;
+}
+.detail-state-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0;
+  line-height: 1;
+}
+.detail-state-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}
+.detail-metrics {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.detail-metric {
+  padding: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.detail-metric .l {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+.detail-metric .v {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  margin-top: 4px;
+  color: var(--text);
+}
+.detail-metric.critical .v { color: var(--critical); }
+.detail-metric.warn .v { color: var(--warn); }
+.detail-counties {
+  margin-top: 14px;
+}
+.detail-counties h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.county-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.county-row .cname { font-weight: 500; }
+.county-row .cval { font-family: var(--font-mono); color: var(--accent); font-weight: 600; }
+.county-row .cmeta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ============================================================
+   WEATHER PANEL
+   ============================================================ */
+.alerts-list {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.alerts-list::-webkit-scrollbar { width: 6px; }
+.alerts-list::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+.alert-card {
+  padding: 10px 12px;
+  background: rgba(255,138,61,0.06);
+  border: 1px solid rgba(255,138,61,0.2);
+  border-left: 3px solid var(--warn);
+  border-radius: 10px;
+  font-size: 12px;
+}
+.alert-card.severe { border-left-color: var(--critical); background: rgba(255,61,87,0.06); border-color: rgba(255,61,87,0.2); }
+.alert-card.minor  { border-left-color: var(--info);     background: rgba(74,168,255,0.04); border-color: rgba(74,168,255,0.18); }
+.alert-card h5 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.alert-card p { margin: 0; color: var(--text-soft); font-size: 11.5px; line-height: 1.45; }
+.alert-card .area {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   FAQ / Content for SEO
+   ============================================================ */
+.content-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.content-section h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  margin: 0 0 14px;
+}
+.content-section details {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+.content-section details:last-child { border-bottom: 0; }
+.content-section summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  list-style: none;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px;
+}
+.content-section summary::-webkit-details-marker { display: none; }
+.content-section summary::after {
+  content: '+';
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 700;
+  transition: transform .2s;
+}
+.content-section details[open] summary::after { transform: rotate(45deg); }
+.content-section details p {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  margin-top: 24px;
+  padding: 24px 0 8px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer .ftbrand {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+footer a { color: var(--accent); }
+footer .small { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
+
+/* ============================================================
+   MOBILE BOTTOM TAB BAR (iOS style)
+   ============================================================ */
+.tabbar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 90;
+  display: flex;
+  padding: 8px 8px calc(8px + var(--safe-bottom));
+  background: rgba(6,9,18,0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--border);
+}
+.tabbar button {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: transparent; border: 0;
+  padding: 6px 4px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  transition: color .15s, transform .15s;
+}
+.tabbar button.active { color: var(--accent); }
+.tabbar button:active { transform: scale(0.94); }
+.tabbar button svg { width: 22px; height: 22px; }
+
+@media (min-width: 980px) {
+  .tabbar { display: none; }
+}
+
+/* ============================================================
+   INSTALL PROMPT
+   ============================================================ */
+.install-prompt {
+  position: fixed;
+  left: 12px; right: 12px;
+  bottom: calc(80px + var(--safe-bottom) + 12px);
+  z-index: 80;
+  display: none;
+  align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: rgba(10,14,26,0.95);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-pop);
+  font-size: 13px;
+}
+.install-prompt.visible { display: flex; }
+.install-prompt .ip-text { flex: 1; }
+.install-prompt .ip-text strong { display: block; font-weight: 600; }
+.install-prompt .ip-text span { font-size: 11px; color: var(--text-muted); }
+.install-prompt button {
+  border: 0;
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.install-prompt .close-btn {
+  background: transparent; color: var(--text-muted);
+  padding: 6px;
+  font-size: 18px;
+}
+@media (min-width: 980px) {
+  .install-prompt { left: auto; right: 16px; bottom: 16px; max-width: 360px; }
+}
+
+/* ============================================================
+   Visually-hidden util (for SEO headings)
+   ============================================================ */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="brand" aria-label="NEPA-PRO Power Tracker home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 10-12h-7z"/></svg>
+      </span>
+      <span class="brand-text">
+        Power<br><small>NEPA-PRO Live</small>
+      </span>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="megamenu">
+        <li>
+          <button aria-haspopup="true" aria-expanded="false">Dashboard ▾</button>
+          <div class="mega-panel">
+            <a class="mega-item" href="#map">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></span>
+              <span><strong>Live US Map</strong><span>State-by-state outages, click to drill</span></span>
+            </a>
+            <a class="mega-item" href="#stats">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></span>
+              <span><strong>National Stats</strong><span>Customers out, active outages, ETR</span></span>
+            </a>
+            <a class="mega-item" href="#leaderboard">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4h10v6a5 5 0 0 1-10 0z"/><path d="M5 8H3v2a4 4 0 0 0 4 4M19 8h2v2a4 4 0 0 1-4 4M9 18h6v3H9z"/></svg></span>
+              <span><strong>Most-Affected States</strong><span>Top 10 ranked, updated 5 min</span></span>
+            </a>
+            <a class="mega-item" href="#weather">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11-2 4 4 0 0 0-1 8z"/></svg></span>
+              <span><strong>NOAA Alerts</strong><span>Storms driving outages right now</span></span>
+            </a>
+          </div>
+        </li>
+        <li>
+          <button aria-haspopup="true" aria-expanded="false">Resources ▾</button>
+          <div class="mega-panel">
+            <a class="mega-item" href="#about">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span>
+              <span><strong>About the Data</strong><span>ODIN, ORNL, DOE sources</span></span>
+            </a>
+            <a class="mega-item" href="#faq">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 9a3 3 0 1 1 5 2c-1 .8-2 1.2-2 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg></span>
+              <span><strong>FAQ</strong><span>How updates work, ETR, coverage</span></span>
+            </a>
+            <a class="mega-item" href="https://nepa-pro.com" target="_blank" rel="noopener">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></span>
+              <span><strong>NEPA-PRO Home</strong><span>Renovations, solar, maintenance</span></span>
+            </a>
+            <a class="mega-item" href="https://solarmason.com" target="_blank" rel="noopener">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2 2M17.1 17.1l2 2M4.9 19.1l2-2M17.1 6.9l2-2"/></svg></span>
+              <span><strong>Solar Mason</strong><span>Backup-ready solar EPC for PA</span></span>
+            </a>
+          </div>
+        </li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div style="display:flex; gap:10px; align-items:center;">
+      <span id="status-pill" class="nav-status" aria-live="polite">
+        <span class="dot"></span>
+        <span id="status-text">Connecting…</span>
+      </span>
+      <a class="header-cta" href="https://nepa-pro.com" target="_blank" rel="noopener" style="display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 10-12h-7z"/></svg>
+        Backup Power
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main id="main" role="main">
+
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-row">
+      <h1 id="hero-title">Who's <span class="accent">without power</span><br>in the US right now</h1>
+      <div class="last-updated" id="last-updated">Loading…</div>
+    </div>
+    <p>Live customer-outage counts pulled from utilities through ODIN (the U.S. Department of Energy / Oak Ridge National Laboratory's outage data initiative), cross-referenced with active NOAA weather alerts. Tap any state to drill into the data.</p>
+  </section>
+
+  <!-- National Stats -->
+  <section id="stats" class="stats" aria-labelledby="stats-h">
+    <h2 class="sr-only" id="stats-h">National outage statistics</h2>
+
+    <div class="stat critical">
+      <div class="stat-label">Customers Out</div>
+      <div class="stat-value" id="kpi-customers">—</div>
+      <div class="stat-sub" id="kpi-customers-sub">across the US</div>
+    </div>
+    <div class="stat warn">
+      <div class="stat-label">Active Outages</div>
+      <div class="stat-value" id="kpi-events">—</div>
+      <div class="stat-sub" id="kpi-events-sub">reported incidents</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">States Affected</div>
+      <div class="stat-value" id="kpi-states">—</div>
+      <div class="stat-sub" id="kpi-states-sub">of 50 + DC</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Avg Outage Age</div>
+      <div class="stat-value" id="kpi-duration">—</div>
+      <div class="stat-sub" id="kpi-duration-sub">since reported</div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section id="map" class="map-card" aria-labelledby="map-h">
+    <div class="map-toolbar">
+      <h2 class="map-title" id="map-h">Live US Outage Map</h2>
+      <div class="map-controls" role="tablist" aria-label="Map view">
+        <button data-mode="customers" class="active" role="tab" aria-selected="true">Customers Out</button>
+        <button data-mode="percent" role="tab" aria-selected="false">% Affected</button>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <svg id="usMap" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive map of US power outages by state. Use Tab to focus a state and Enter to view detail."></svg>
+      <div class="map-loading" id="map-loading"><div><div class="spinner"></div>Loading live data…</div></div>
+      <div class="map-tooltip" id="map-tooltip" role="tooltip"></div>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <span>0</span>
+      <div class="legend-bar"></div>
+      <span id="legend-max">—</span>
+    </div>
+  </section>
+
+  <!-- Detail + Leaderboard -->
+  <section class="grid-2">
+    <div class="panel" id="leaderboard" aria-labelledby="lb-h">
+      <div class="panel-head">
+        <h3 class="panel-title" id="lb-h">Most Affected States</h3>
+        <span class="panel-pill" id="lb-pill">Top 10</span>
+      </div>
+      <div class="lb" id="lb-list" role="list">
+        <div class="lb-empty">Waiting for live feed…</div>
+      </div>
+    </div>
+
+    <div class="panel" id="detail" aria-labelledby="detail-h">
+      <div class="panel-head">
+        <h3 class="panel-title" id="detail-h">State Detail</h3>
+        <span class="panel-pill" id="detail-pill">Tap a state</span>
+      </div>
+      <div id="detail-body">
+        <div class="detail-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div>Tap any state on the map to see customer counts, county-level outages, and estimated restoration windows.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weather -->
+  <section id="weather" class="panel" aria-labelledby="w-h">
+    <div class="panel-head">
+      <h3 class="panel-title" id="w-h">Active NOAA Weather Alerts</h3>
+      <span class="panel-pill" id="w-pill">— active</span>
+    </div>
+    <div class="alerts-list" id="alerts-list">
+      <div class="lb-empty">Loading alerts…</div>
+    </div>
+  </section>
+
+  <!-- About / Content for SEO + AI search -->
+  <section id="about" class="content-section">
+    <h2>About this tracker</h2>
+    <p style="color:var(--text-soft); margin-top:0;">
+      <strong>NEPA-PRO Power Tracker</strong> is a free public-good tool that aggregates real-time power outage data across the United States. We use the
+      <a href="https://odin.ornl.gov/" target="_blank" rel="noopener" style="color:var(--accent)">Outage Data Initiative Nationwide (ODIN)</a> dataset
+      operated by Oak Ridge National Laboratory and the U.S. Department of Energy's Office of Electricity, plus the National Weather Service alerts API.
+      Built and maintained by <a href="https://nepa-pro.com" target="_blank" rel="noopener" style="color:var(--accent)">NEPA-PRO</a>,
+      a Veteran-owned property maintenance, renovation, and solar-ready construction firm based in Northeast Pennsylvania.
+    </p>
+    <p style="color:var(--text-soft);">
+      The map updates every five minutes while open. State totals and rankings are computed in your browser from county-level utility reports —
+      nothing is logged on our side. This tool is informational; for emergencies always call <strong>911</strong>, and report your specific outage
+      to your local utility provider so they can dispatch crews.
+    </p>
+  </section>
+
+  <section id="faq" class="content-section">
+    <h2>Frequently asked questions</h2>
+
+    <details open>
+      <summary>Where does the outage data come from?</summary>
+      <p>Counts come from <strong>ODIN</strong> (Outage Data Initiative Nationwide) — a free public dataset led by Oak Ridge National Laboratory and the U.S. Department of Energy's Office of Electricity. Participating utilities push their outage counts at the county level every 5 to 15 minutes. Coverage is growing but does not yet include every utility in the country.</p>
+    </details>
+    <details>
+      <summary>How often does the data refresh?</summary>
+      <p>While the app is open, it pulls a fresh feed every <strong>five minutes</strong>. You can also pull-to-refresh on mobile, or click the status pill in the header to force a manual refresh.</p>
+    </details>
+    <details>
+      <summary>What does ETR mean?</summary>
+      <p><strong>ETR</strong> stands for Estimated Time of Restoration — the utility's projected time for power to come back on at an outage location. Not every utility reports an ETR; when present we show it on the state detail panel.</p>
+    </details>
+    <details>
+      <summary>Why does my state show zero outages?</summary>
+      <p>Either no participating utility is reporting an active outage in your area, or your local utility isn't yet integrated with ODIN. If you have a confirmed outage and don't see it here, check your utility's own outage map directly — they may not be a current ODIN reporter.</p>
+    </details>
+    <details>
+      <summary>How is "duration" calculated?</summary>
+      <p>For each active outage record, we compute the time elapsed since the utility first reported it. The "Avg Outage Age" KPI is the customer-weighted mean of those elapsed times. It's a lagging signal: very long durations usually point to widespread storm damage where crews are still restoring service.</p>
+    </details>
+    <details>
+      <summary>Can I install this as an app?</summary>
+      <p>Yes. This is a <strong>Progressive Web App</strong>. On iPhone: tap <em>Share → Add to Home Screen</em>. On Android: tap the menu and choose <em>Install app</em>. It works offline using cached data from your last session.</p>
+    </details>
+    <details>
+      <summary>Is my location or data being tracked?</summary>
+      <p>No. We don't request location, don't run third-party analytics, and don't set tracking cookies. All processing happens in your browser. The only outbound requests this app makes are to the public ODIN dataset and NOAA's public alerts API.</p>
+    </details>
+  </section>
+
+  <footer>
+    <div class="ftbrand">NEPA-PRO • Power Tracker</div>
+    <div>Data: <a href="https://odin.ornl.gov" target="_blank" rel="noopener">DOE ODIN / ORNL</a> · <a href="https://api.weather.gov" target="_blank" rel="noopener">NOAA NWS</a> · Boundaries: US Census TIGER</div>
+    <div class="small">© <span id="yr"></span> NEPA-PRO. Informational use only. Not affiliated with any utility. Call 911 for emergencies.</div>
+  </footer>
+</main>
+
+<!-- Install prompt (Android beforeinstallprompt + iOS hint) -->
+<div class="install-prompt" id="install-prompt">
+  <div class="ip-text">
+    <strong id="ip-title">Install Power Tracker</strong>
+    <span id="ip-sub">Add to your home screen for one-tap access</span>
+  </div>
+  <button id="ip-action">Install</button>
+  <button class="close-btn" id="ip-close" aria-label="Dismiss">×</button>
+</div>
+
+<!-- Mobile tab bar -->
+<nav class="tabbar" aria-label="Mobile sections">
+  <button data-jump="#map" class="active" aria-label="Map view">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>
+    <span>Map</span>
+  </button>
+  <button data-jump="#leaderboard" aria-label="Top states">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+    <span>Stats</span>
+  </button>
+  <button data-jump="#weather" aria-label="Weather alerts">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11-2 4 4 0 0 0-1 8z"/></svg>
+    <span>Weather</span>
+  </button>
+  <button data-jump="#faq" aria-label="Frequently asked questions">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 5 2c-1 .8-2 1.2-2 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+    <span>FAQ</span>
+  </button>
+</nav>
+
+<!-- ============================================================
+     Libraries (D3 + topojson) — CDN, deferred
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" defer></script>
+
+<!-- ============================================================
+     App logic
+     ============================================================ -->
+<script defer>
+'use strict';
+
+/* ------------------------------------------------------------
+   FIPS → State lookup
+   ------------------------------------------------------------ */
+const FIPS_TO_STATE = {
+  "01":{n:"Alabama",a:"AL"},"02":{n:"Alaska",a:"AK"},"04":{n:"Arizona",a:"AZ"},
+  "05":{n:"Arkansas",a:"AR"},"06":{n:"California",a:"CA"},"08":{n:"Colorado",a:"CO"},
+  "09":{n:"Connecticut",a:"CT"},"10":{n:"Delaware",a:"DE"},"11":{n:"District of Columbia",a:"DC"},
+  "12":{n:"Florida",a:"FL"},"13":{n:"Georgia",a:"GA"},"15":{n:"Hawaii",a:"HI"},
+  "16":{n:"Idaho",a:"ID"},"17":{n:"Illinois",a:"IL"},"18":{n:"Indiana",a:"IN"},
+  "19":{n:"Iowa",a:"IA"},"20":{n:"Kansas",a:"KS"},"21":{n:"Kentucky",a:"KY"},
+  "22":{n:"Louisiana",a:"LA"},"23":{n:"Maine",a:"ME"},"24":{n:"Maryland",a:"MD"},
+  "25":{n:"Massachusetts",a:"MA"},"26":{n:"Michigan",a:"MI"},"27":{n:"Minnesota",a:"MN"},
+  "28":{n:"Mississippi",a:"MS"},"29":{n:"Missouri",a:"MO"},"30":{n:"Montana",a:"MT"},
+  "31":{n:"Nebraska",a:"NE"},"32":{n:"Nevada",a:"NV"},"33":{n:"New Hampshire",a:"NH"},
+  "34":{n:"New Jersey",a:"NJ"},"35":{n:"New Mexico",a:"NM"},"36":{n:"New York",a:"NY"},
+  "37":{n:"North Carolina",a:"NC"},"38":{n:"North Dakota",a:"ND"},"39":{n:"Ohio",a:"OH"},
+  "40":{n:"Oklahoma",a:"OK"},"41":{n:"Oregon",a:"OR"},"42":{n:"Pennsylvania",a:"PA"},
+  "44":{n:"Rhode Island",a:"RI"},"45":{n:"South Carolina",a:"SC"},"46":{n:"South Dakota",a:"SD"},
+  "47":{n:"Tennessee",a:"TN"},"48":{n:"Texas",a:"TX"},"49":{n:"Utah",a:"UT"},
+  "50":{n:"Vermont",a:"VT"},"51":{n:"Virginia",a:"VA"},"53":{n:"Washington",a:"WA"},
+  "54":{n:"West Virginia",a:"WV"},"55":{n:"Wisconsin",a:"WI"},"56":{n:"Wyoming",a:"WY"}
+};
+const STATE_NAME_TO_FIPS = Object.fromEntries(
+  Object.entries(FIPS_TO_STATE).map(([fips, v]) => [v.n.toLowerCase(), fips])
+);
+const STATE_ABBR_TO_FIPS = Object.fromEntries(
+  Object.entries(FIPS_TO_STATE).map(([fips, v]) => [v.a, fips])
+);
+
+/* ------------------------------------------------------------
+   State app data
+   ------------------------------------------------------------ */
+const APP = {
+  records: [],           // raw ODIN records
+  byState: new Map(),    // fips → { customers, events, percent, counties, oldest }
+  weatherAlerts: [],
+  selectedFips: null,
+  viewMode: 'customers', // 'customers' | 'percent'
+  topo: null,
+  geoJson: null,
+  lastUpdate: null,
+  refreshTimer: null,
+};
+
+/* ------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------ */
+const fmt = {
+  num: (n) => {
+    if (n == null || isNaN(n)) return '—';
+    return new Intl.NumberFormat('en-US').format(Math.round(n));
+  },
+  compact: (n) => {
+    if (n == null || isNaN(n)) return '—';
+    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(n);
+  },
+  pct: (n) => n == null || isNaN(n) ? '—' : (n < 0.1 ? n.toFixed(2) : n.toFixed(1)) + '%',
+  duration: (ms) => {
+    if (ms == null || ms <= 0) return '—';
+    const m = Math.floor(ms / 60000);
+    if (m < 60) return m + 'm';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h ' + (m % 60) + 'm';
+    const d = Math.floor(h / 24);
+    return d + 'd ' + (h % 24) + 'h';
+  },
+  time: (d) => new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+  }).format(d),
+};
+
+function setStatus(text, isError=false) {
+  const pill = document.getElementById('status-pill');
+  document.getElementById('status-text').textContent = text;
+  pill.classList.toggle('is-error', isError);
+}
+
+function showLoading(on) {
+  document.getElementById('map-loading').classList.toggle('hidden', !on);
+}
+
+/* ------------------------------------------------------------
+   ODIN data fetch
+   ------------------------------------------------------------
+   The ODIN dataset is hosted on ORNL's OpenDataSoft portal.
+   Endpoint pattern (Opendatasoft Explore v2.1):
+     /api/explore/v2.1/catalog/datasets/{id}/records
+   Pull a generous page (CORS-enabled), then aggregate client-side.
+   ------------------------------------------------------------ */
+const ODIN_ENDPOINT = 'https://ornl.opendatasoft.com/api/explore/v2.1/catalog/datasets/odin-real-time-outages-county/records?limit=100';
+
+async function fetchOdin() {
+  setStatus('Fetching outages…');
+  let allRecords = [];
+  let offset = 0;
+  const pageSize = 100;
+  const maxPages = 20; // safety cap = 2000 records
+
+  for (let i = 0; i < maxPages; i++) {
+    const url = ODIN_ENDPOINT + '&offset=' + offset;
+    let resp;
+    try {
+      resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    } catch (e) {
+      throw new Error('Network error reaching ODIN: ' + e.message);
+    }
+    if (!resp.ok) throw new Error('ODIN HTTP ' + resp.status);
+    const json = await resp.json();
+    const records = json.results || json.records || [];
+    if (!records.length) break;
+
+    // Opendatasoft v2.1 returns flat objects in `results`; older `records[].fields`
+    const flat = records.map(r => r.fields ? r.fields : r);
+    allRecords = allRecords.concat(flat);
+
+    if (records.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  APP.records = allRecords;
+  APP.lastUpdate = new Date();
+  return allRecords;
+}
+
+/* ------------------------------------------------------------
+   Aggregate ODIN records → byState map
+   ODIN fields vary slightly; we try common keys.
+   ------------------------------------------------------------ */
+function pickField(r, candidates) {
+  for (const k of candidates) {
+    if (r[k] != null && r[k] !== '') return r[k];
+  }
+  return undefined;
+}
+
+function recordStateFips(r) {
+  // Try multiple known field names
+  const fipsField = pickField(r, ['state_fips', 'state_fips_code', 'statefips', 'state_id']);
+  if (fipsField) {
+    const s = String(fipsField).padStart(2, '0');
+    if (FIPS_TO_STATE[s]) return s;
+  }
+  const countyFips = pickField(r, ['county_fips', 'county_fips_code', 'fips', 'geoid']);
+  if (countyFips) {
+    const s = String(countyFips).padStart(5, '0').slice(0, 2);
+    if (FIPS_TO_STATE[s]) return s;
+  }
+  const stateName = pickField(r, ['state_name', 'state', 'statename']);
+  if (stateName) {
+    // Could be 2-letter or full name
+    const sn = String(stateName).trim();
+    if (sn.length === 2 && STATE_ABBR_TO_FIPS[sn.toUpperCase()]) return STATE_ABBR_TO_FIPS[sn.toUpperCase()];
+    const fips = STATE_NAME_TO_FIPS[sn.toLowerCase()];
+    if (fips) return fips;
+  }
+  return null;
+}
+
+function aggregateByState() {
+  const byState = new Map();
+  let now = Date.now();
+
+  for (const r of APP.records) {
+    const fips = recordStateFips(r);
+    if (!fips) continue;
+
+    const customers = Number(pickField(r, [
+      'customers_out', 'customers_affected', 'numberofcustomersaffected',
+      'customer_count', 'customers'
+    ])) || 0;
+    const tracked = Number(pickField(r, [
+      'customers_tracked', 'customers_served', 'total_customers'
+    ])) || 0;
+    const countyName = pickField(r, ['county_name', 'county', 'name']) || 'Unknown County';
+    const utility = pickField(r, ['utility_name', 'utility', 'company']) || null;
+    const startTimeRaw = pickField(r, [
+      'outage_start_time', 'start_time', 'outagestart', 'event_start'
+    ]);
+    const updatedRaw = pickField(r, ['last_update_time', 'updated', 'timestamp']);
+
+    let startTime = null;
+    if (startTimeRaw) {
+      const d = new Date(startTimeRaw);
+      if (!isNaN(d.getTime())) startTime = d;
+    }
+    const age = startTime ? (now - startTime.getTime()) : null;
+
+    if (!byState.has(fips)) {
+      byState.set(fips, {
+        fips,
+        name: FIPS_TO_STATE[fips].n,
+        abbr: FIPS_TO_STATE[fips].a,
+        customers: 0,
+        tracked: 0,
+        events: 0,
+        counties: new Map(),
+        utilities: new Set(),
+        ageWeightedSum: 0,
+        ageWeightedCustomers: 0,
+        oldestStart: null,
+      });
+    }
+    const S = byState.get(fips);
+    S.customers += customers;
+    S.tracked += tracked;
+    S.events += 1;
+    if (utility) S.utilities.add(utility);
+    if (startTime && (!S.oldestStart || startTime < S.oldestStart)) S.oldestStart = startTime;
+    if (age != null && customers > 0) {
+      S.ageWeightedSum += age * customers;
+      S.ageWeightedCustomers += customers;
+    }
+
+    // County rollup
+    const ckey = countyName;
+    if (!S.counties.has(ckey)) S.counties.set(ckey, { name: ckey, customers: 0, events: 0, oldestStart: null, utilities: new Set() });
+    const C = S.counties.get(ckey);
+    C.customers += customers;
+    C.events += 1;
+    if (utility) C.utilities.add(utility);
+    if (startTime && (!C.oldestStart || startTime < C.oldestStart)) C.oldestStart = startTime;
+  }
+
+  // compute percent
+  for (const S of byState.values()) {
+    S.percent = S.tracked > 0 ? (S.customers / S.tracked) * 100 : 0;
+    S.avgAge = S.ageWeightedCustomers > 0 ? S.ageWeightedSum / S.ageWeightedCustomers : null;
+  }
+
+  APP.byState = byState;
+  return byState;
+}
+
+/* ------------------------------------------------------------
+   NOAA NWS alerts (free, public, no key)
+   ------------------------------------------------------------ */
+async function fetchWeatherAlerts() {
+  try {
+    const r = await fetch('https://api.weather.gov/alerts/active?status=actual&limit=200', {
+      headers: { 'Accept': 'application/geo+json' }
+    });
+    if (!r.ok) throw new Error('NWS HTTP ' + r.status);
+    const j = await r.json();
+    const features = (j.features || []).filter(f => {
+      const p = f.properties || {};
+      const ev = (p.event || '').toLowerCase();
+      // Focus on outage-relevant events
+      return /storm|tornado|hurricane|wind|ice|blizzard|flood|fire|heat/i.test(ev);
+    });
+    APP.weatherAlerts = features.map(f => ({
+      id: f.id,
+      event: f.properties.event,
+      severity: (f.properties.severity || '').toLowerCase(),
+      area: f.properties.areaDesc,
+      headline: f.properties.headline,
+      description: f.properties.description,
+      effective: f.properties.effective,
+      expires: f.properties.expires,
+    }));
+  } catch (e) {
+    console.warn('NWS fetch failed:', e);
+    APP.weatherAlerts = [];
+  }
+}
+
+/* ------------------------------------------------------------
+   Topojson load (US Atlas via jsdelivr)
+   ------------------------------------------------------------ */
+async function loadTopo() {
+  if (APP.topo) return APP.topo;
+  const r = await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3.0.1/states-10m.json');
+  if (!r.ok) throw new Error('topo HTTP ' + r.status);
+  APP.topo = await r.json();
+  APP.geoJson = topojson.feature(APP.topo, APP.topo.objects.states);
+  return APP.topo;
+}
+
+/* ------------------------------------------------------------
+   Color scale
+   ------------------------------------------------------------ */
+function colorFor(value, max, mode) {
+  if (!value || !max) return '#1a2238';
+  // Log-ish ramp so dense events don't wash out small ones
+  const t = Math.min(1, Math.log10(value + 1) / Math.log10(max + 1));
+  if (t < 0.5) {
+    // dark navy → amber
+    const k = t / 0.5;
+    return d3.interpolateRgb('#1a2238', '#ffb800')(k);
+  } else {
+    // amber → red
+    const k = (t - 0.5) / 0.5;
+    return d3.interpolateRgb('#ffb800', '#ff3d57')(k);
+  }
+}
+
+/* ------------------------------------------------------------
+   Draw map
+   ------------------------------------------------------------ */
+function drawMap() {
+  const svg = d3.select('#usMap');
+  svg.selectAll('*').remove();
+
+  const width = 960, height = 600;
+  const path = d3.geoPath(d3.geoAlbersUsa().scale(1200).translate([width/2, height/2]));
+
+  // Compute max for current view
+  let max = 0;
+  for (const S of APP.byState.values()) {
+    const v = APP.viewMode === 'percent' ? S.percent : S.customers;
+    if (v > max) max = v;
+  }
+  document.getElementById('legend-max').textContent =
+    APP.viewMode === 'percent' ? fmt.pct(max) : fmt.compact(max) + ' out';
+
+  const g = svg.append('g');
+  g.selectAll('path')
+    .data(APP.geoJson.features)
+    .enter().append('path')
+      .attr('class', 'state')
+      .attr('d', path)
+      .attr('fill', d => {
+        const fips = String(d.id).padStart(2, '0');
+        const S = APP.byState.get(fips);
+        if (!S) return '#1a2238';
+        const v = APP.viewMode === 'percent' ? S.percent : S.customers;
+        return colorFor(v, max, APP.viewMode);
+      })
+      .attr('data-fips', d => String(d.id).padStart(2, '0'))
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', d => {
+        const fips = String(d.id).padStart(2, '0');
+        const meta = FIPS_TO_STATE[fips];
+        const S = APP.byState.get(fips);
+        return (meta ? meta.n : 'State') + ': ' + (S ? fmt.num(S.customers) + ' customers out' : 'no outages reported');
+      })
+      .on('mouseenter', (e, d) => showTooltip(e, d))
+      .on('mousemove', (e, d) => moveTooltip(e))
+      .on('mouseleave', hideTooltip)
+      .on('click', (e, d) => selectState(String(d.id).padStart(2, '0')))
+      .on('keydown', (e, d) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectState(String(d.id).padStart(2, '0'));
+        }
+      });
+
+  // Re-apply selection highlight
+  if (APP.selectedFips) {
+    svg.selectAll('.state').classed('selected', d => String(d.id).padStart(2, '0') === APP.selectedFips);
+  }
+}
+
+/* ------------------------------------------------------------
+   Tooltip
+   ------------------------------------------------------------ */
+const TT = document.getElementById('map-tooltip');
+function showTooltip(e, d) {
+  const fips = String(d.id).padStart(2, '0');
+  const meta = FIPS_TO_STATE[fips];
+  const S = APP.byState.get(fips);
+  TT.innerHTML = `
+    <strong>${meta ? meta.n : 'Unknown'}</strong>
+    <div class="tt-row"><span>Out</span><b>${S ? fmt.num(S.customers) : '0'}</b></div>
+    <div class="tt-row"><span>Active</span><span>${S ? S.events : 0}</span></div>
+    <div class="tt-row"><span>% out</span><span>${S ? fmt.pct(S.percent) : '—'}</span></div>
+    <div class="tt-row"><span>Avg age</span><span>${S ? fmt.duration(S.avgAge) : '—'}</span></div>
+  `;
+  TT.classList.add('visible');
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  const wrap = document.querySelector('.map-wrap');
+  const rect = wrap.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  TT.style.left = x + 'px';
+  TT.style.top  = y + 'px';
+}
+function hideTooltip() { TT.classList.remove('visible'); }
+
+/* ------------------------------------------------------------
+   State selection / detail panel
+   ------------------------------------------------------------ */
+function selectState(fips) {
+  APP.selectedFips = fips;
+  d3.select('#usMap').selectAll('.state')
+    .classed('selected', d => String(d.id).padStart(2, '0') === fips);
+  renderDetail();
+  document.getElementById('detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderDetail() {
+  const box = document.getElementById('detail-body');
+  const pill = document.getElementById('detail-pill');
+  if (!APP.selectedFips) {
+    pill.textContent = 'Tap a state';
+    return;
+  }
+  const meta = FIPS_TO_STATE[APP.selectedFips];
+  const S = APP.byState.get(APP.selectedFips);
+  pill.textContent = meta.a;
+
+  if (!S || S.customers === 0) {
+    box.innerHTML = `
+      <h3 class="detail-state-name">${meta.n}</h3>
+      <div class="detail-state-sub">No active outages reported via ODIN</div>
+      <p style="color:var(--text-soft); margin-top:14px; font-size:13px;">
+        Either your local utility isn't currently reporting outages, or no participating utility in
+        ${meta.n} has reported one in this window. Check your utility's outage map for the most
+        authoritative status in your service territory.
+      </p>
+    `;
+    return;
+  }
+
+  const countiesArr = Array.from(S.counties.values()).sort((a, b) => b.customers - a.customers).slice(0, 8);
+  const now = Date.now();
+
+  let countiesHtml = '';
+  for (const c of countiesArr) {
+    const age = c.oldestStart ? (now - c.oldestStart.getTime()) : null;
+    countiesHtml += `
+      <div class="county-row">
+        <div>
+          <div class="cname">${escapeHtml(c.name)}</div>
+          <div class="cmeta">${c.events} active · age ${fmt.duration(age)}${c.utilities.size ? ' · ' + Array.from(c.utilities).slice(0,2).map(escapeHtml).join(', ') : ''}</div>
+        </div>
+        <div class="cval">${fmt.num(c.customers)}</div>
+      </div>
+    `;
+  }
+
+  box.innerHTML = `
+    <h3 class="detail-state-name">${meta.n}</h3>
+    <div class="detail-state-sub">${S.events} active outage${S.events === 1 ? '' : 's'} · ${S.utilities.size} utilit${S.utilities.size === 1 ? 'y' : 'ies'} reporting</div>
+    <div class="detail-metrics">
+      <div class="detail-metric critical">
+        <div class="l">Customers Out</div>
+        <div class="v">${fmt.num(S.customers)}</div>
+      </div>
+      <div class="detail-metric warn">
+        <div class="l">% of Tracked</div>
+        <div class="v">${fmt.pct(S.percent)}</div>
+      </div>
+      <div class="detail-metric">
+        <div class="l">Avg Age</div>
+        <div class="v">${fmt.duration(S.avgAge)}</div>
+      </div>
+      <div class="detail-metric">
+        <div class="l">Oldest Started</div>
+        <div class="v" style="font-size:14px; font-family:var(--font-mono); font-weight:500;">
+          ${S.oldestStart ? fmt.time(S.oldestStart) : '—'}
+        </div>
+      </div>
+    </div>
+    <div class="detail-counties">
+      <h4>Top affected counties</h4>
+      ${countiesHtml || '<div class="lb-empty">No county data</div>'}
+    </div>
+  `;
+}
+
+/* ------------------------------------------------------------
+   KPIs + leaderboard
+   ------------------------------------------------------------ */
+function renderKpis() {
+  let totalCustomers = 0, totalEvents = 0, statesAffected = 0;
+  let ageSum = 0, ageWeight = 0;
+  for (const S of APP.byState.values()) {
+    totalCustomers += S.customers;
+    totalEvents += S.events;
+    if (S.customers > 0) statesAffected++;
+    if (S.avgAge != null && S.customers > 0) {
+      ageSum += S.avgAge * S.customers;
+      ageWeight += S.customers;
+    }
+  }
+  const avgAge = ageWeight > 0 ? ageSum / ageWeight : null;
+
+  document.getElementById('kpi-customers').textContent = fmt.compact(totalCustomers);
+  document.getElementById('kpi-customers-sub').textContent = totalCustomers > 0
+    ? '~' + fmt.num(totalCustomers) + ' people impacted'
+    : 'no widespread outages';
+
+  document.getElementById('kpi-events').textContent = fmt.num(totalEvents);
+  document.getElementById('kpi-events-sub').textContent = 'reported incidents';
+
+  document.getElementById('kpi-states').textContent = statesAffected;
+  document.getElementById('kpi-states-sub').textContent = 'of 50 + DC';
+
+  document.getElementById('kpi-duration').textContent = fmt.duration(avgAge);
+  document.getElementById('kpi-duration-sub').textContent = avgAge ? 'customer-weighted' : '—';
+}
+
+function renderLeaderboard() {
+  const list = document.getElementById('lb-list');
+  const arr = Array.from(APP.byState.values())
+    .filter(s => s.customers > 0)
+    .sort((a, b) => b.customers - a.customers)
+    .slice(0, 10);
+
+  if (arr.length === 0) {
+    list.innerHTML = '<div class="lb-empty">No active outages reported across participating utilities right now. ⚡</div>';
+    document.getElementById('lb-pill').textContent = '0 states';
+    return;
+  }
+  document.getElementById('lb-pill').textContent = arr.length + ' state' + (arr.length === 1 ? '' : 's');
+
+  const max = arr[0].customers;
+  list.innerHTML = arr.map((S, i) => {
+    const w = (S.customers / max) * 100;
+    return `
+      <div class="lb-row" role="listitem" tabindex="0" data-fips="${S.fips}" style="--w:${w}%;">
+        <div class="lb-rank">${i + 1}</div>
+        <div>
+          <div class="lb-name">${escapeHtml(S.name)}</div>
+          <div class="lb-meta">${S.events} active · ${fmt.pct(S.percent)} · age ${fmt.duration(S.avgAge)}</div>
+        </div>
+        <div class="lb-val">${fmt.compact(S.customers)}</div>
+      </div>
+    `;
+  }).join('');
+
+  list.querySelectorAll('.lb-row').forEach(row => {
+    row.addEventListener('click', () => selectState(row.dataset.fips));
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectState(row.dataset.fips); }
+    });
+  });
+}
+
+function renderWeather() {
+  const list = document.getElementById('alerts-list');
+  const pill = document.getElementById('w-pill');
+  if (!APP.weatherAlerts.length) {
+    list.innerHTML = '<div class="lb-empty">No outage-relevant weather alerts active right now ✅</div>';
+    pill.textContent = '0 active';
+    return;
+  }
+  pill.textContent = APP.weatherAlerts.length + ' active';
+
+  // Severity order
+  const sevRank = { extreme: 0, severe: 1, moderate: 2, minor: 3 };
+  APP.weatherAlerts.sort((a, b) => (sevRank[a.severity] ?? 4) - (sevRank[b.severity] ?? 4));
+
+  list.innerHTML = APP.weatherAlerts.slice(0, 25).map(a => {
+    const cls = a.severity === 'severe' || a.severity === 'extreme' ? 'severe' :
+                a.severity === 'minor' ? 'minor' : '';
+    return `
+      <div class="alert-card ${cls}">
+        <h5>${escapeHtml(a.event || 'Alert')}</h5>
+        <p>${escapeHtml((a.headline || '').slice(0, 180))}</p>
+        <span class="area">${escapeHtml((a.area || '').slice(0, 120))}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ------------------------------------------------------------
+   Sequencer
+   ------------------------------------------------------------ */
+async function refreshAll() {
+  try {
+    showLoading(true);
+    setStatus('Refreshing…');
+    await Promise.all([
+      fetchOdin().catch(e => { console.error(e); throw e; }),
+      fetchWeatherAlerts(),
+    ]);
+    aggregateByState();
+    if (!APP.geoJson) await loadTopo();
+    drawMap();
+    renderKpis();
+    renderLeaderboard();
+    renderDetail();
+    renderWeather();
+    setStatus('Live · ' + fmt.time(APP.lastUpdate));
+    document.getElementById('last-updated').textContent =
+      'Last updated ' + fmt.time(APP.lastUpdate);
+    showLoading(false);
+  } catch (err) {
+    console.error('Refresh failed:', err);
+    setStatus('Data unavailable', true);
+    document.getElementById('last-updated').textContent = 'Data feed temporarily unavailable';
+
+    // First-run fallback: still load the map so the UI is usable
+    if (!APP.geoJson) {
+      try { await loadTopo(); drawMap(); } catch (e2) { /* ignore */ }
+    }
+    if (APP.byState.size === 0) {
+      // Render empty states so leaderboard/weather have a message
+      renderKpis();
+      renderLeaderboard();
+      renderWeather();
+    }
+    showLoading(false);
+  }
+}
+
+/* ------------------------------------------------------------
+   Mode toggle
+   ------------------------------------------------------------ */
+document.querySelectorAll('.map-controls button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.map-controls button').forEach(b => {
+      b.classList.toggle('active', b === btn);
+      b.setAttribute('aria-selected', b === btn);
+    });
+    APP.viewMode = btn.dataset.mode;
+    drawMap();
+  });
+});
+
+/* ------------------------------------------------------------
+   Mobile tab bar
+   ------------------------------------------------------------ */
+document.querySelectorAll('.tabbar button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabbar button').forEach(b => b.classList.toggle('active', b === btn));
+    const target = btn.dataset.jump;
+    if (target) document.querySelector(target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* Status pill = manual refresh */
+document.getElementById('status-pill').addEventListener('click', refreshAll);
+
+/* ------------------------------------------------------------
+   PWA install prompt
+   ------------------------------------------------------------ */
+let deferredInstall = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstall = e;
+  const p = document.getElementById('install-prompt');
+  p.classList.add('visible');
+});
+document.getElementById('ip-action').addEventListener('click', async () => {
+  if (deferredInstall) {
+    deferredInstall.prompt();
+    deferredInstall = null;
+    document.getElementById('install-prompt').classList.remove('visible');
+  } else {
+    // iOS path: show instructions
+    alert("On iPhone: tap the Share button, then 'Add to Home Screen' to install Power Tracker.");
+  }
+});
+document.getElementById('ip-close').addEventListener('click', () => {
+  document.getElementById('install-prompt').classList.remove('visible');
+  try { localStorage.setItem('ipDismissed', '1'); } catch(e){}
+});
+
+// iOS standalone detection — show iOS install hint if not standalone & not dismissed
+(function iosInstallHint() {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    try { if (localStorage.getItem('ipDismissed')) return; } catch(e){}
+    setTimeout(() => {
+      const p = document.getElementById('install-prompt');
+      document.getElementById('ip-title').textContent = 'Add to Home Screen';
+      document.getElementById('ip-sub').textContent = 'Tap Share, then "Add to Home Screen"';
+      document.getElementById('ip-action').textContent = 'How';
+      p.classList.add('visible');
+    }, 3000);
+  }
+})();
+
+/* ------------------------------------------------------------
+   Service worker
+   ------------------------------------------------------------ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(e => console.warn('SW reg failed:', e));
+  });
+}
+
+/* ------------------------------------------------------------
+   Boot
+   ------------------------------------------------------------ */
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+window.addEventListener('DOMContentLoaded', async () => {
+  // Wait for d3 + topojson to be available (they load with defer)
+  function waitForLibs() {
+    return new Promise(resolve => {
+      const tick = () => {
+        if (window.d3 && window.topojson) resolve();
+        else setTimeout(tick, 50);
+      };
+      tick();
+    });
+  }
+  await waitForLibs();
+  await refreshAll();
+  // Refresh every 5 minutes
+  APP.refreshTimer = setInterval(refreshAll, 5 * 60 * 1000);
+  // Refresh when tab regains focus, if last update > 60s
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && APP.lastUpdate && (Date.now() - APP.lastUpdate.getTime()) > 60000) {
+      refreshAll();
+    }
+  });
+});
+
+/* ------------------------------------------------------------
+   Utils
+   ------------------------------------------------------------ */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+</script>
+
+</body>
+</html>

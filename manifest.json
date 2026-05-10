@@ -1,0 +1,46 @@
+{
+  "name": "NEPA-PRO Power Outage Tracker",
+  "short_name": "Power",
+  "description": "Real-time map of US power outages — customers without power by state and county, estimated restoration time, and active weather alerts. Free public-good tool by NEPA-PRO.",
+  "id": "/",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["utilities", "news", "weather", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Live Map",
+      "short_name": "Map",
+      "description": "Jump to the live US outage map",
+      "url": "/?utm_source=pwa#map",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Top States",
+      "short_name": "Top",
+      "description": "Most affected states right now",
+      "url": "/?utm_source=pwa#leaderboard",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Weather Alerts",
+      "short_name": "Weather",
+      "description": "Active NOAA storm alerts",
+      "url": "/?utm_source=pwa#weather",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
